@@ -1,0 +1,7 @@
+type Post @entity {
+  id: ID!
+  data: String!
+  blockTime: BigInt
+  author: Bytes!
+  name: String!
+}

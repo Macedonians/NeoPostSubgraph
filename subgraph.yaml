@@ -1,0 +1,24 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Publication
+    network: poa-sokol
+    source:
+      address: "0xE9b98A2E67BdD79070f0A5767Ea028ADA2004984"
+      startBlock: 23042061 
+      abi: Publication
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Publish
+      abis:
+        - name: Publication
+          file: ./abis/Publication.json
+      eventHandlers:
+        - event: Publish(uint256,address,string,string)
+          handler: handlePublish
+      file: ./src/mapping.ts
