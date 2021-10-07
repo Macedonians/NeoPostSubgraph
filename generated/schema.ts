@@ -51,13 +51,21 @@ export class Post extends Entity {
     this.set("data", Value.fromString(value));
   }
 
-  get blockTime(): BigInt {
+  get blockTime(): BigInt | null {
     let value = this.get("blockTime");
-    return value.toBigInt();
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set blockTime(value: BigInt) {
-    this.set("blockTime", Value.fromBigInt(value));
+  set blockTime(value: BigInt | null) {
+    if (value === null) {
+      this.unset("blockTime");
+    } else {
+      this.set("blockTime", Value.fromBigInt(value as BigInt));
+    }
   }
 
   get author(): Bytes {
@@ -67,6 +75,73 @@ export class Post extends Entity {
 
   set author(value: Bytes) {
     this.set("author", Value.fromBytes(value));
+  }
+
+  get name(): string {
+    let value = this.get("name");
+    return value.toString();
+  }
+
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
+  }
+}
+
+export class Librarian extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Librarian entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Librarian entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Librarian", id.toString(), this);
+  }
+
+  static load(id: string): Librarian | null {
+    return store.get("Librarian", id) as Librarian | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get isOmni(): boolean {
+    let value = this.get("isOmni");
+    return value.toBoolean();
+  }
+
+  set isOmni(value: boolean) {
+    this.set("isOmni", Value.fromBoolean(value));
+  }
+
+  get creator(): Bytes {
+    let value = this.get("creator");
+    return value.toBytes();
+  }
+
+  set creator(value: Bytes) {
+    this.set("creator", Value.fromBytes(value));
+  }
+
+  get address(): Bytes {
+    let value = this.get("address");
+    return value.toBytes();
+  }
+
+  set address(value: Bytes) {
+    this.set("address", Value.fromBytes(value));
   }
 
   get name(): string {

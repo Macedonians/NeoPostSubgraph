@@ -5,3 +5,11 @@ type Post @entity {
   author: Bytes!
   name: String!
 }
+
+type Librarian @entity {
+  id: ID!
+  isOmni: Boolean!
+  creator: Bytes!
+  address: Bytes!
+  name: String!
+}

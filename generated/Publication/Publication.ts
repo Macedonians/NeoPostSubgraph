@@ -10,6 +10,36 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
+export class LibrarianCreated extends ethereum.Event {
+  get params(): LibrarianCreated__Params {
+    return new LibrarianCreated__Params(this);
+  }
+}
+
+export class LibrarianCreated__Params {
+  _event: LibrarianCreated;
+
+  constructor(event: LibrarianCreated) {
+    this._event = event;
+  }
+
+  get name(): string {
+    return this._event.parameters[0].value.toString();
+  }
+
+  get librarianAddress(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get omniAddress(): Address {
+    return this._event.parameters[2].value.toAddress();
+  }
+
+  get isOmni(): boolean {
+    return this._event.parameters[3].value.toBoolean();
+  }
+}
+
 export class Publish extends ethereum.Event {
   get params(): Publish__Params {
     return new Publish__Params(this);
@@ -102,6 +132,44 @@ export class PostCall__Outputs {
   _call: PostCall;
 
   constructor(call: PostCall) {
+    this._call = call;
+  }
+}
+
+export class SetPosterCall extends ethereum.Call {
+  get inputs(): SetPosterCall__Inputs {
+    return new SetPosterCall__Inputs(this);
+  }
+
+  get outputs(): SetPosterCall__Outputs {
+    return new SetPosterCall__Outputs(this);
+  }
+}
+
+export class SetPosterCall__Inputs {
+  _call: SetPosterCall;
+
+  constructor(call: SetPosterCall) {
+    this._call = call;
+  }
+
+  get librarianAddress(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get name(): string {
+    return this._call.inputValues[1].value.toString();
+  }
+
+  get isOmni(): boolean {
+    return this._call.inputValues[2].value.toBoolean();
+  }
+}
+
+export class SetPosterCall__Outputs {
+  _call: SetPosterCall;
+
+  constructor(call: SetPosterCall) {
     this._call = call;
   }
 }
