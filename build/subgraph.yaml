@@ -6,7 +6,7 @@ dataSources:
     name: Publication
     network: poa-sokol
     source:
-      address: "0xB3031F56d915AcB024e6EE1b24b6fd4cdE33f105"
+      address: "0x609cEd9da93420886AA32b04c606C5111c7DF859"
       startBlock: 23056450
       abi: Publication
     mapping:
